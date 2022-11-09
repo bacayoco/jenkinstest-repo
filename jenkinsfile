@@ -1,0 +1,12 @@
+# declarative pipeline 
+
+pipeline{
+    agent any
+    stages{
+        stage('terraform init'){
+            step{
+                sh"terraform init"
+            }
+        }
+    }
+}
