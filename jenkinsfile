@@ -12,7 +12,7 @@ pipeline{
         
         stage('terraform format'){
             steps{
-                sh "terraform fmt"
+                sh "terraform plan"
             }
         }
     }
