@@ -9,7 +9,14 @@ pipeline{
                 sh "terraform init"
             }
         }
+        
+        stage('terraform format'){
+            steps{
+                sh "terraform fmt"
+            }
+        }
     }
+      
 }
 def getterraformPath(){
    def tfhome = tool name: 'terraform', type: 'terraform'
