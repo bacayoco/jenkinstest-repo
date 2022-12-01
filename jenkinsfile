@@ -17,11 +17,11 @@ pipeline{
         }
         
        stage('TF Apply') {
-          steps {
-         
-          sh terraform apply -input=false myplan'
-        
-      }
+             steps {
+                sh 'terraform plan -out=./my-plan'
+                input message: "Apply plan?"
+                sh 'terraform apply -auto-approve ./my-plan' 
+            }
     }
     }
       
