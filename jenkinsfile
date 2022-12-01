@@ -16,11 +16,13 @@ pipeline{
             }
         }
         
-       stage('terraform apply'){
-        steps{
-          sh "terraform apply"
-            }
-        }
+       stage('TF Apply') {
+          steps {
+         
+          sh terraform apply -input=false myplan'
+        
+      }
+    }
     }
       
 }
