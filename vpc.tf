@@ -60,7 +60,7 @@ resource "aws_subnet" "priv_subnet-1" {
   availability_zone = "us-east-1a"
 
     tags = {
-    Name = "terraform_demo"
+    Name = "priv_subnet-1"
   }
 }
 
