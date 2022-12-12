@@ -70,7 +70,16 @@ resource "aws_subnet" "pub_subnet-1" {
   availability_zone = "us-east-1a"
 
     tags = {
-    Name = "terraform_demo"
+    Name = "pub_subnet"
   }
 }
 
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  subnet_id   = aws_subnet.pub_subnet-1.id
+
+  tags = {
+    Name = "terraform_demo"
+  }
+}
