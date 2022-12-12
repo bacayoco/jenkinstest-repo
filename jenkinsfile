@@ -16,7 +16,7 @@ pipeline{
             }
         }
         
-       stage('TF Apply') {
+       stage('TF   Apply') {
              steps {
                 sh 'terraform plan -out=./my-plan'
                 input message: "Apply plan?"
