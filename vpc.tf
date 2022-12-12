@@ -73,3 +73,4 @@ resource "aws_subnet" "pub_subnet" {
     Name = "terraform_demo"
   }
 }
+
