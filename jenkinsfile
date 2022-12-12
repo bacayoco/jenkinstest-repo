@@ -10,7 +10,7 @@ pipeline{
             }
         }
         
-        stage('terraform format'){
+        stage('terraform plan stage'){
             steps{
                 sh "terraform plan"
             }
