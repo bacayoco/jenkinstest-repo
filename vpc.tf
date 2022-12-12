@@ -30,7 +30,7 @@ resource "aws_internet_gateway" "demo_vpc-IGW" {
 # }
 
 resource "aws_route_table_association" "RT-association" {
-  subnet_id      = aws_subnet.priv_subnet.id
+  subnet_id      = aws_subnet.priv_subnet-1.id
   route_table_id = aws_route_table.RT.id
 
  
