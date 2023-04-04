@@ -88,7 +88,6 @@ resource "aws_security_group" "alb-SG" {
 
 
 # resource "aws_instance" "waf-instance" {
-#   ami           = "ami-09d3b3274b6c5d4aa"
 #   instance_type = var.instance_type_web
 #   security_groups = [aws_security_group.alb-SG.id]
 #   subnet_id         = aws_subnet.pubic_waf_subnet[0].id
