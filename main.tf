@@ -1,51 +1,81 @@
+locals {
+  vpc_id = aws_vpc.this.id
+  # az     = data.aws_availability_zones.available.names
+}
 
-################################################################
-# Create 2 ec2 instances making use of count / for_each block
-################################################################
-# creating vpc 
-resource "aws_vpc" "aws_vpc" {
+# local.az
+resource "aws_vpc" "this" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
-  cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "kojitechs-vpc"
+    Name = "baca-demo-vpc"
   }
-} # 
+}
 
-## "RESOURCE_NAME.LOCAL_NAME.DESIRED_ARTR"
-resource "aws_subnet" "subnet_1" {
+resource "aws_internet_gateway" "gw" {
+  vpc_id = local.vpc_id
 
-  vpc_id                  = aws_vpc.aws_vpc.id
-  cidr_block              = "10.0.0.0/24"
-  availability_zone       = "us-east-1a"
+  tags = {
+    Name = "baca-demo"
+  }
+}
+
+
+resource "aws_subnet" "public_subnet" {
+  count = length(var.public_subnet_cidr)
+
+  vpc_id                  = local.vpc_id
+  cidr_block              = var.public_subnet_cidr[count.index]
+  availability_zone       = slice(data.aws_availability_zones.available.names, 2, 4)
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "subnet_1"
+    Name = "baca-demo"
   }
 }
 
-resource "aws_subnet" "subnet_2" {
-  vpc_id                  = aws_vpc.aws_vpc.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1b"
-  map_public_ip_on_launch = true
+
+resource "aws_subnet" "private_subnet" {
+  count = length(var.private_subnet_cidr)
+  vpc_id            = local.vpc_id
+  # availability_zone_database-az = slice(data.aws_availability_zones.available.names, 0, 2)
+  cidr_block        = var.private_subnet_cidr[count.index]
+  availability_zone = slice(data.aws_availability_zones.available.names, 0, 2)
 
   tags = {
-    Name = "subnet_2"
+    Name = "baca-demo"
   }
 }
 
-# count
-resource "aws_instance" "this" {
-  count = 2
 
-  ami           = data.aws_ami.ami.id
-  instance_type = "t3.micro"
-  key_name      = data.aws_key_pair.my_key_pair.key_name
-  subnet_id     = [aws_subnet.subnet_1.id, aws_subnet.subnet_2.id][count.index]
-  #  subnet_id = element([aws_subnet.subnet_1.id,aws_subnet.subnet_2.id], count.index)
+
+################################################################################
+# CREATING PUBLIC ROUTE TABLES ASSOCIATED WITH PUBLIC SUBNET?
+################################################################################
+
+resource "aws_route_table" "public_route_table" {
+  vpc_id = local.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
 
   tags = {
-    Name = "app-${count.index + 1}"
+    Name = "public-route-table"
   }
 }
+
+################################################################################
+# CREATING PUBLIC ROUTE TABLES ASSOCIATION
+################################################################################
+resource "aws_route_table_association" "rt_association" {
+  count = length(var.public_subnet_cidr)
+
+  subnet_id      = aws_subnet.public_subnet.*.id[count.index]
+  route_table_id = aws_route_table.public_route_table.id
+}
+
+
