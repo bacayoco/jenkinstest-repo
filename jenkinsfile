@@ -6,20 +6,11 @@ pipeline{
                 sh "terraform init"
             }
         }
-
-     stage('terraform wait'){
-       steps{
-          input {
-        message 'wait approval'
-        ok 'yes/no'
-       }
-       }
-     }
-
-    
+ 
      stage('terraform yes plan'){
        steps{
          sh "terraform plan"
+         input {message 'wait approval'ok 'yes/no' }
        }
      }
    }
