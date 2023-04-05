@@ -1,6 +1,6 @@
 variable "key_name" {
-  type        = list
+  type        = string
   description = "name of keypair to pull down using data source"
 
-  default     = ["kojitechs-demo-key"]
+  default     = "10.0.0.0/16"
 }
