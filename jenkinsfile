@@ -10,7 +10,7 @@ pipeline{
      stage('terraform yes plan'){
        steps{
          sh "terraform plan"
-         input {message 'wait approval'ok 'yes/no' }
+         input message 'wait approval'ok 'yes/no' 
        }
      }
    }
