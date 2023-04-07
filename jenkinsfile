@@ -21,7 +21,7 @@ pipeline{
                 sh 'terraform plan -out=./my-plan'
                 input message: "Apply plan?"
                 sh 'terraform apply -auto-approve ./my-plan' 
-                sh 'terraform destroy -auto-approve'
+        
             }
     }
     }

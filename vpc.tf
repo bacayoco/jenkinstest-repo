@@ -1,6 +1,6 @@
 
 resource "aws_vpc" "demo_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.demo_vpc
 
   tags = {
     Name = "terraform_demo"
@@ -44,8 +44,8 @@ resource "aws_route_table" "RT" {
 
 resource "aws_subnet" "priv_subnet-1" {
   vpc_id            = aws_vpc.demo_vpc.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-east-1a"
+  cidr_block        = var.priv_subnet_cidr
+  availability_zone = var.priv_subnet_AZ
 
   tags = {
     Name = "priv_subnet-1"
@@ -54,7 +54,7 @@ resource "aws_subnet" "priv_subnet-1" {
 
 resource "aws_subnet" "pub_subnet-1" {
   vpc_id            = aws_vpc.demo_vpc.id
-  cidr_block        = "10.0.2.0/24"
+  cidr_block        = var.pub_subnet_cidr
   availability_zone = "us-east-1a"
   map_public_ip_on_launch = true
 
