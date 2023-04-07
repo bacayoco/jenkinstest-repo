@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('terraform init'){
             steps{
-                sh "terraform init"
+                sh "terraform init -auto-approve"
             }
         }
         stage('s3 create bucket'){
