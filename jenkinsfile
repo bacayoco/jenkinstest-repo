@@ -9,6 +9,13 @@ pipeline{
                 sh "terraform init"
             }
         }
+        stage('s3 create bucket){
+        steps{
+         script{
+         creatbackendbucket('terraformjenkinsbucket')
+         }
+          }
+        }
         
         stage('terraform yes plan'){
             steps{
@@ -30,4 +37,8 @@ pipeline{
 def getterraformPath(){
    def tfhome = tool name: 'terraform', type: 'terraform'
    return tfhome
+}
+
+def creatbackendbucket(bucketname){
+sh returnStdout: true, script: "aws s3 create bucket ${bucketname} --region=us-east-1"
 }
