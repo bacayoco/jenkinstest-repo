@@ -9,7 +9,7 @@ pipeline{
                 sh "terraform init"
             }
         }
-        stage('s3 create bucket){
+        stage('s3 create bucket'){
         steps{
          script{
          creatbackendbucket('terraformjenkinsbucket')
