@@ -1,5 +1,5 @@
 pipeline{
-    agent any
+    agent {labeland  : 'network'}
     environment {
     PATH = "${PATH}:${getterraformPath()}"
     }
