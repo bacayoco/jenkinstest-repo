@@ -7,6 +7,7 @@ pipeline{
         stage('terraform init'){
             steps{
                 sh "terraform init -reconfigure"
+                sh 'yes'
             }
         }
         stage('s3 create bucket'){
