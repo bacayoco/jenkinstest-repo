@@ -1,6 +1,3 @@
-# provider "aws" {
-#   region = var.region
-# }
 terraform {
   required_providers {
     aws = {
@@ -14,7 +11,7 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
-
+terraform {
   backend "s3" {
     bucket         = "terraformjenkinsbucket"
     key            = "bucket/evn"
@@ -22,3 +19,4 @@ provider "aws" {
     dynamodb_table = "javahome-lock"
     encrypt        = true
   }
+}
