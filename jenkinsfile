@@ -27,7 +27,7 @@ pipeline{
              steps {
                 sh 'terraform plan -out=./my-plan'
                 input message: "Apply plan?"
-                sh 'terraform apply -auto-approve ./my-plan' 
+                sh 'terraform ${actions} -auto-approve ./my-plan' 
         
             }
     }
