@@ -9,7 +9,7 @@ pipeline{
  
      stage('terraform yes plan'){
        steps{
-         sh "terraform plan"
+         sh "terraform ${action} --auto-approve"
        }
      }
    }
