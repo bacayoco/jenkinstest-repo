@@ -13,7 +13,7 @@ variable  priv_subnet_cidr{
 variable  priv_subnet_AZ{
     type = string
     description = "cidr block for my priv_subnet"
-    default = "us-east-1a"
+    default = "us-east-1b"
 }
 
 variable  pub_subnet_AZ{
